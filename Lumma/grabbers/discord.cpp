@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "pch.h"
 #include "../wrappers/telegram.h"
 #include "../utils.h"
 #include "../debug.h"
