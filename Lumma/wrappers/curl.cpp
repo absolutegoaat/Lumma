@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "curl.h"
 #include "../utils.h"
+#include "../debug.h"
 
 #include <windows.h>
 #include <iostream>
@@ -111,53 +112,58 @@ namespace curl {
 
     std::string PostDocument(const std::string& url, const std::string& path)
     {
-        std::string cmd =
-            "curl.exe -sS -X POST "
-            "\"" + url + "\" "
-            "-F \"document=@" + path + "\" "
-            "-w \"\\n%{http_code}\"";
-
-        std::string result;
-        DWORD exitCode = 0;
-        if (!RunHiddenProcess(cmd, result, exitCode)) {
-            return "Failed to launch curl.exe";
-        }
-
-        if (exitCode != 0) {
-            return "CURL error: process exited with code " +
-                std::to_string(exitCode);
-        }
-
-        // Split body and HTTP status code.
-        size_t pos = result.rfind('\n');
-
-        if (pos == std::string::npos) {
-            return "Invalid curl response: " + result;
-        }
-
-        std::string body = result.substr(0, pos);
-        std::string codeStr = result.substr(pos + 1);
-
-        // Remove possible CR from Windows line endings.
-        if (!codeStr.empty() && codeStr.back() == '\r') {
-            codeStr.pop_back();
-        }
-
-        long httpCode = 0;
-
         try {
-            httpCode = std::stol(codeStr);
-        }
-        catch (...) {
-            return "Invalid HTTP status: " + codeStr;
-        }
+            std::string cmd =
+                "curl.exe -sS -X POST "
+                "\"" + url + "\" "
+                "-F \"document=@" + path + "\" "
+                "-w \"\\n%{http_code}\"";
 
-        if (httpCode < 200 || httpCode >= 300) {
-            return "HTTP error " + std::to_string(httpCode) +
-                ": " + body;
-        }
+            std::string result;
+            DWORD exitCode = 0;
+            if (!RunHiddenProcess(cmd, result, exitCode)) {
+                return "Failed to launch curl.exe";
+            }
 
-        return body;
+            if (exitCode != 0) {
+                return "CURL error: process exited with code " +
+                    std::to_string(exitCode);
+            }
+
+            // Split body and HTTP status code.
+            size_t pos = result.rfind('\n');
+
+            if (pos == std::string::npos) {
+                return "Invalid curl response: " + result;
+            }
+
+            std::string body = result.substr(0, pos);
+            std::string codeStr = result.substr(pos + 1);
+
+            // Remove possible CR from Windows line endings.
+            if (!codeStr.empty() && codeStr.back() == '\r') {
+                codeStr.pop_back();
+            }
+
+            long httpCode = 0;
+
+            try {
+                httpCode = std::stol(codeStr);
+            }
+            catch (...) {
+                return "Invalid HTTP status: " + codeStr;
+            }
+
+            if (httpCode < 200 || httpCode >= 300) {
+                return "HTTP error " + std::to_string(httpCode) +
+                    ": " + body;
+            }
+
+            return body;
+        }
+        catch (const std::exception& e) {
+            Debug::LogError(e.what());
+        }
     }
 
     HttpResponse Get(const std::string& url, const std::string& data) {

