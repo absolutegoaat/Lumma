@@ -140,6 +140,7 @@
     <ClInclude Include="config\telegram.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="grabbers\browser.h" />
     <ClInclude Include="grabbers\discord.h" />
     <ClInclude Include="grabbers\getinfopc.h" />
     <ClInclude Include="grabbers\minecraft.h" />
@@ -152,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="grabbers\browser.cpp" />
     <ClCompile Include="grabbers\discord.cpp" />
     <ClCompile Include="grabbers\getinfopc.cpp" />
     <ClCompile Include="grabbers\minecraft.cpp" />

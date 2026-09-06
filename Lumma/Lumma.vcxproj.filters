@@ -60,6 +60,9 @@
     <ClInclude Include="grabbers\minecraftacc.h">
       <Filter>Source Files\grabbers</Filter>
     </ClInclude>
+    <ClInclude Include="grabbers\browser.h">
+      <Filter>Source Files\grabbers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -93,6 +96,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="grabbers\minecraftacc.cpp">
+      <Filter>Source Files\grabbers</Filter>
+    </ClCompile>
+    <ClCompile Include="grabbers\browser.cpp">
       <Filter>Source Files\grabbers</Filter>
     </ClCompile>
   </ItemGroup>
